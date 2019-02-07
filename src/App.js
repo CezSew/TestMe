@@ -10,20 +10,24 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.handleButtonClick = this.handleButtonClick.bind(this);
+    this.isTheAnswerCorrect = this.isTheAnswerCorrect.bind(this);
     this.state = {
       step: "start",
       questionIndex: 0,
-      question: {}
+      question: {},
+      correctAnswerIndex: ''
     }
+  }
+
+  isTheAnswerCorrect = (index) => {
+    const correctIndex = this.state.correctAnswerIndex;
+    return index === correctIndex; 
   }
 
   handleButtonClick = () => {
     let questionNum = 1;
     let question = loadQuestion(questionNum);
-    this.setState({step:"question", questionIndex: questionNum, question}, () => {
-      console.log(this.state);
-    });
-    
+    this.setState({step:"question", questionIndex: questionNum, question, correctAnswerIndex: question[questionNum].correct});
   }   
 
   render() {
@@ -37,7 +41,7 @@ class App extends Component {
       );
     } else if(this.state.step == "question"){
       content = (
-        <Question question={this.state.question}/>
+        <Question question={this.state.question} checkAnswer={this.isTheAnswerCorrect}/>
       );
     }
 
