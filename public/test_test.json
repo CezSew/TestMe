@@ -1,0 +1,12 @@
+{
+    "1": {
+        "question": "Dlaczego niebo jest niebieskie?",
+        "answers": {
+            "1": "Bóg tak chciał",
+            "2": "Światło widzialne w zakresie niebieskim jest rozpraszane w atmosferze",
+            "3": "Bo jest zimne",
+            "4": "Bo Ziemia jest płaska"
+        },
+        "correct": "2"
+    }
+}
