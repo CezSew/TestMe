@@ -5,11 +5,20 @@ export default class Answer extends Component {
         super(props);
         this.handleClick = this.handleClick.bind(this);
         this.assignClassName = this.assignClassName.bind(this);
+        this.blockAnswers = this.blockAnswers.bind(this);
     }
-    handleClick(index, that) {
+    handleClick = (index, that) => {
         let isAnswerCorrect = this.props.checkAnswer(index);
         let elClass = isAnswerCorrect ? "correct" : "incorrect";
-        this.assignClassName(that, elClass)
+        this.assignClassName(that, elClass);
+        this.blockAnswers();
+        this.props.handleAnswer(isAnswerCorrect);
+    }
+    blockAnswers() {
+        let elements = document.getElementsByClassName('question__answer');
+        Object.keys(elements).map((key)=> {
+            elements[key].disabled = true;
+        });
     }
     assignClassName(el, elClass) {
         el.classList.add(elClass);

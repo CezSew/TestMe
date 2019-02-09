@@ -11,23 +11,50 @@ class App extends Component {
     super(props);
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.isTheAnswerCorrect = this.isTheAnswerCorrect.bind(this);
+    this.handleAnswer = this.handleAnswer.bind(this);
+
     this.state = {
       step: "start",
       questionIndex: 0,
-      question: {},
-      correctAnswerIndex: ''
+      question: {
+        data: {},
+        correctIndex: '',
+        currentQuestionNumber: '',
+        isTheAnswerCorrect: false
+      },
+      stats: []
     }
   }
 
   isTheAnswerCorrect = (index) => {
-    const correctIndex = this.state.correctAnswerIndex;
-    return index === correctIndex; 
+    const correctIndex = this.state.question.correctIndex;
+    const isCorrect = (index === correctIndex);
+    return isCorrect; 
+  }
+
+  handleAnswer = (isCorrect) => {
+    let currentNumber = this.state.question.currentQuestionNumber;
+    this.setState({
+      stats: [...this.state.stats, [currentNumber,
+        isCorrect]]
+    }, () => {
+      console.log(this.state);
+    });
+    
   }
 
   handleButtonClick = () => {
     let questionNum = 1;
     let question = loadQuestion(questionNum);
-    this.setState({step:"question", questionIndex: questionNum, question, correctAnswerIndex: question[questionNum].correct});
+    question = question ? question : this.state.question.data;
+    this.setState({
+      step:"question", 
+      question: { 
+        data: question,
+        currentQuestionNumber: questionNum,
+        correctIndex: question[questionNum].correct
+      }
+    });
   }   
 
   render() {
@@ -41,7 +68,10 @@ class App extends Component {
       );
     } else if(this.state.step == "question"){
       content = (
-        <Question question={this.state.question} checkAnswer={this.isTheAnswerCorrect}/>
+        <Question 
+        question={this.state.question.data} 
+        checkAnswer={this.isTheAnswerCorrect} 
+        handleAnswer={this.handleAnswer}/>
       );
     }
 

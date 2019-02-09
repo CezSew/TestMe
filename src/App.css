@@ -52,3 +52,6 @@ button {
   content: 'X';
   color: red;
 }
+.question__answer:focus {
+  outline: none;
+}

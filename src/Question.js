@@ -6,11 +6,15 @@ export default class Question extends Component {
         super(props);
     }
     render () {
-        const question = this.props.question[1];
+        console.log(this.props);
+        const question = this.props.question ? this.props.question[1] : {};
         return (
             <section className="question">
                 <h2>{question.question}</h2>
-                <Answer question={question} checkAnswer={this.props.checkAnswer}/>
+                <Answer 
+                question={question} 
+                checkAnswer={this.props.checkAnswer} 
+                handleAnswer={this.props.handleAnswer}/>
             </section>
         )
     }
