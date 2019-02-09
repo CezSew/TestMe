@@ -27,7 +27,7 @@ export default class Answer extends Component {
         const question = this.props.question;
         const answers = question.answers;
         let answersElement = Object.keys(answers).map((key)=>{
-            return <button className="question__answer " onClick={(e)=>{this.handleClick(key, e.target)}} key={key}>{answers[key]}</button>;
+            return <button className="question__answer " onClick={(e)=>{this.handleClick(key, e.target)}} key={this.props.questionNum + ':' + key}>{answers[key]}</button>;
         });
         return (
             <div className="question__answers mt-5 d-flex flex-column align-items-start">

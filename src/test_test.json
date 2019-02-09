@@ -8,5 +8,25 @@
             "4": "Bo Ziemia jest płaska"
         },
         "correct": "2"
+    },
+    "2": {
+        "question": "Dlaczego niebo jest niebieskie?2",
+        "answers": {
+            "1": "Bóg tak chciał",
+            "2": "Światło widzialne w zakresie niebieskim jest rozpraszane w atmosferze",
+            "3": "Bo jest zimne",
+            "4": "Bo Ziemia jest płaska"
+        },
+        "correct": "2"
+    },
+    "3": {
+        "question": "Dlaczego niebo jest niebieskie?3",
+        "answers": {
+            "1": "Bóg tak chciał",
+            "2": "Światło widzialne w zakresie niebieskim jest rozpraszane w atmosferze",
+            "3": "Bo jest zimne",
+            "4": "Bo Ziemia jest płaska"
+        },
+        "correct": "2"
     }
 }

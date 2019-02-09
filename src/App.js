@@ -12,6 +12,7 @@ class App extends Component {
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.isTheAnswerCorrect = this.isTheAnswerCorrect.bind(this);
     this.handleAnswer = this.handleAnswer.bind(this);
+    this.prepareQuestion = this.prepareQuestion.bind(this);
 
     this.state = {
       step: "start",
@@ -24,6 +25,21 @@ class App extends Component {
       },
       stats: []
     }
+  }
+  prepareQuestion = () => {
+    let currentQuestionNumber = this.state.question.currentQuestionNumber;
+    let questionNum = currentQuestionNumber ? (currentQuestionNumber + 1) : 1;
+    let question = loadQuestion(questionNum);
+    question = question ? question : this.state.question.data;
+    console.log(questionNum);
+    this.setState({
+      step:"question", 
+      question: { 
+        data: question,
+        currentQuestionNumber: questionNum,
+        correctIndex: question[questionNum].correct
+      }
+    });
   }
 
   isTheAnswerCorrect = (index) => {
@@ -38,23 +54,15 @@ class App extends Component {
       stats: [...this.state.stats, [currentNumber,
         isCorrect]]
     }, () => {
-      console.log(this.state);
+      setTimeout(()=> {
+        this.prepareQuestion();
+      }, 3000);
     });
     
   }
 
   handleButtonClick = () => {
-    let questionNum = 1;
-    let question = loadQuestion(questionNum);
-    question = question ? question : this.state.question.data;
-    this.setState({
-      step:"question", 
-      question: { 
-        data: question,
-        currentQuestionNumber: questionNum,
-        correctIndex: question[questionNum].correct
-      }
-    });
+    this.prepareQuestion();
   }   
 
   render() {
@@ -69,6 +77,7 @@ class App extends Component {
     } else if(this.state.step == "question"){
       content = (
         <Question 
+        questionNum = {this.state.question.currentQuestionNumber}
         question={this.state.question.data} 
         checkAnswer={this.isTheAnswerCorrect} 
         handleAnswer={this.handleAnswer}/>
