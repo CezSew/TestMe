@@ -23,22 +23,33 @@ class App extends Component {
         currentQuestionNumber: '',
         isTheAnswerCorrect: false
       },
-      stats: []
+      stats: [],
+      questionsCount: ''
     }
   }
+  
   prepareQuestion = () => {
     let currentQuestionNumber = this.state.question.currentQuestionNumber;
     let questionNum = currentQuestionNumber ? (currentQuestionNumber + 1) : 1;
     let question = loadQuestion(questionNum);
+    let questionsCount = Object.keys(question).length;
+    let step;
+    if(questionNum > questionsCount) {
+      step = "finish";
+      questionNum--;
+    } else {
+      step = "question";
+    }
     question = question ? question : this.state.question.data;
-    console.log(questionNum);
+    console.log(question);
     this.setState({
-      step:"question", 
+      step:step, 
       question: { 
         data: question,
         currentQuestionNumber: questionNum,
         correctIndex: question[questionNum].correct
-      }
+      },
+      questionsCount: questionsCount
     });
   }
 
@@ -56,7 +67,7 @@ class App extends Component {
     }, () => {
       setTimeout(()=> {
         this.prepareQuestion();
-      }, 3000);
+      }, 1000);
     });
     
   }
@@ -81,6 +92,16 @@ class App extends Component {
         question={this.state.question.data} 
         checkAnswer={this.isTheAnswerCorrect} 
         handleAnswer={this.handleAnswer}/>
+      );
+    } else if(this.state.step == "finish") {
+      let stats = Object.keys(this.state.stats).map((key)=>{
+        console.log(this.state.stats[key]);
+        return <p key={key}>Pytanie nr {this.state.stats[key][0]}: {this.state.stats[key][1] ? "poprawnie" : "niepoprawnie"}</p>;
+      });
+      content = (
+        <React.Fragment>
+          {stats}
+        </React.Fragment>
       );
     }
 
