@@ -1,6 +1,5 @@
 const json = require('./test_test.json');
-const loadQuestion = (index) => {
-
+const loadQuestion = () => {
     return json;
 }
 

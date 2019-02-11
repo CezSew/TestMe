@@ -13,6 +13,9 @@ class App extends Component {
     this.isTheAnswerCorrect = this.isTheAnswerCorrect.bind(this);
     this.handleAnswer = this.handleAnswer.bind(this);
     this.prepareQuestion = this.prepareQuestion.bind(this);
+    this.setStep = this.setStep.bind(this);
+    this.setQuestionNumber = this.setQuestionNumber.bind(this);
+    this.getQuestions = this.getQuestions.bind(this);
 
     this.state = {
       step: "start",
@@ -29,19 +32,13 @@ class App extends Component {
   }
   
   prepareQuestion = () => {
+    let question = this.getQuestions();
     let currentQuestionNumber = this.state.question.currentQuestionNumber;
-    let questionNum = currentQuestionNumber ? (currentQuestionNumber + 1) : 1;
-    let question = loadQuestion(questionNum);
     let questionsCount = Object.keys(question).length;
-    let step;
-    if(questionNum > questionsCount) {
-      step = "finish";
-      questionNum--;
-    } else {
-      step = "question";
-    }
-    question = question ? question : this.state.question.data;
-    console.log(question);
+    let questionNum = this.setQuestionNumber(currentQuestionNumber, questionsCount);
+    let step = this.setStep(questionNum, currentQuestionNumber);
+    console.log(questionNum);
+    
     this.setState({
       step:step, 
       question: { 
@@ -51,6 +48,20 @@ class App extends Component {
       },
       questionsCount: questionsCount
     });
+  }
+
+  setStep = (questionNumber, currentQuestionNumber) => {
+    let step = questionNumber == currentQuestionNumber ? "finish" : "question";
+    return step;
+  }
+
+  getQuestions = () => {
+    return Object.entries(this.state.question.data).length != 0 ? this.state.question.data : loadQuestion();
+  }
+
+  setQuestionNumber = (questionNumber, questionsCount) => {
+    questionNumber = questionNumber + 1 > questionsCount ? +questionNumber : +questionNumber + 1;
+    return questionNumber;
   }
 
   isTheAnswerCorrect = (index) => {
@@ -86,6 +97,7 @@ class App extends Component {
         </React.Fragment>
       );
     } else if(this.state.step == "question"){
+
       content = (
         <Question 
         questionNum = {this.state.question.currentQuestionNumber}
