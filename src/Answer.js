@@ -10,9 +10,14 @@ export default class Answer extends Component {
     handleClick = (index, that) => {
         let isAnswerCorrect = this.props.checkAnswer(index);
         let elClass = isAnswerCorrect ? "correct" : "incorrect";
+        if(!isAnswerCorrect) this.showCorrect(this.props.getCorrectAnswerIndex() - 1);
         this.assignClassName(that, elClass);
         this.blockAnswers();
         this.props.handleAnswer(isAnswerCorrect);
+    }
+    showCorrect(index) {
+        let elements = document.getElementsByClassName('question__answer');
+        elements[index].classList.add('missed-correct');
     }
     blockAnswers() {
         let elements = document.getElementsByClassName('question__answer');

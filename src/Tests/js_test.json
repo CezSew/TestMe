@@ -1,0 +1,52 @@
+{
+    "1": {
+        "question": "New primitive type added in ES6 is...",
+        "answers": {
+            "1": "Bee",
+            "2": "Sentence",
+            "3": "Symbol",
+            "4": "Plant"
+        },
+        "correct": "3"
+    },
+    "2": {
+        "question": "What is Babel?",
+        "answers": {
+            "1": "Javascript transpiler",
+            "2": "Tower",
+            "3": "Methodology",
+            "4": "Team that cannot communicate"
+        },
+        "correct": "1"
+    },
+    "3": {
+        "question": "Which one is not a feature added in ES6?",
+        "answers": {
+            "1": "Destructuring Assignment",
+            "2": "Arrow Functions",
+            "3": "Literal object notation",
+            "4": "Modules, Classes, Iterators, Generators"
+        },
+        "correct": "3"
+    },
+    "4": {
+        "question": "let x, { x: y = 1 } = { x }; y;",
+        "answers": {
+            "1": "undefined",
+            "2": "1",
+            "3": "{x:1}",
+            "4": "Error"
+        },
+        "correct": "2"
+    },
+    "5": {
+        "question": "(typeof (new (class { class () {} })))",
+        "answers": {
+            "1": "function",
+            "2": "object",
+            "3": "undefined",
+            "4": "Error"
+        },
+        "correct": "2"
+    }
+}

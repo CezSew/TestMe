@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import Answer from './Answer';
 
 export default class Question extends Component {
-    constructor(props) {
-        super(props);
-    }
     render () {
         const current = this.props.questionNum;
         const question = this.props.question ? this.props.question[current] : {};
@@ -12,6 +9,7 @@ export default class Question extends Component {
             <section className="question">
                 <h2>{question.question}</h2>
                 <Answer 
+                getCorrectAnswerIndex={this.props.getCorrectAnswerIndex}
                 questionNum={this.props.questionNum}
                 question={question} 
                 checkAnswer={this.props.checkAnswer} 

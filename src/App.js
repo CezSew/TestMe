@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import Button from './Button';
 import Title from './Title';
 import Question from './Question';
 import loadQuestion from './loadQuestion';
+import Menu from './Menu';
+import TestChoose from './TestChoose';
 import './App.css';
 
 class App extends Component {
   constructor(props) {
     super(props);
+
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.isTheAnswerCorrect = this.isTheAnswerCorrect.bind(this);
     this.handleAnswer = this.handleAnswer.bind(this);
@@ -16,6 +18,8 @@ class App extends Component {
     this.setStep = this.setStep.bind(this);
     this.setQuestionNumber = this.setQuestionNumber.bind(this);
     this.getQuestions = this.getQuestions.bind(this);
+    this.getCorrectAnswerIndex = this.getCorrectAnswerIndex.bind(this);
+    this.changeAppStep = this.changeAppStep.bind(this);
 
     this.state = {
       step: "start",
@@ -30,14 +34,13 @@ class App extends Component {
       questionsCount: ''
     }
   }
-  
+
   prepareQuestion = () => {
     let question = this.getQuestions();
     let currentQuestionNumber = this.state.question.currentQuestionNumber;
     let questionsCount = Object.keys(question).length;
     let questionNum = this.setQuestionNumber(currentQuestionNumber, questionsCount);
     let step = this.setStep(questionNum, currentQuestionNumber);
-    console.log(questionNum);
     
     this.setState({
       step:step, 
@@ -46,17 +49,22 @@ class App extends Component {
         currentQuestionNumber: questionNum,
         correctIndex: question[questionNum].correct
       },
-      questionsCount: questionsCount
+      questionsCount: questionsCount,
+      questionTimeout: 1500
     });
   }
 
   setStep = (questionNumber, currentQuestionNumber) => {
-    let step = questionNumber == currentQuestionNumber ? "finish" : "question";
+    let step = questionNumber === currentQuestionNumber ? "finish" : "question";
     return step;
   }
 
+  changeAppStep = (step) => {
+    this.setState({step:step});
+  }
+
   getQuestions = () => {
-    return Object.entries(this.state.question.data).length != 0 ? this.state.question.data : loadQuestion();
+    return Object.entries(this.state.question.data).length !== 0 ? this.state.question.data : loadQuestion();
   }
 
   setQuestionNumber = (questionNumber, questionsCount) => {
@@ -65,8 +73,8 @@ class App extends Component {
   }
 
   isTheAnswerCorrect = (index) => {
-    const correctIndex = this.state.question.correctIndex;
-    const isCorrect = (index === correctIndex);
+    let correctIndex = this.getCorrectAnswerIndex();
+    let isCorrect = (index === correctIndex);
     return isCorrect; 
   }
 
@@ -78,36 +86,38 @@ class App extends Component {
     }, () => {
       setTimeout(()=> {
         this.prepareQuestion();
-      }, 1000);
+      }, this.state.questionTimeout);
     });
-    
   }
 
   handleButtonClick = () => {
     this.prepareQuestion();
   }   
 
+  getCorrectAnswerIndex() {
+      return this.state.question.correctIndex;
+  }
+
   render() {
     let content;
-    if(this.state.step == "start") {
+    if(this.state.step === "start") {
       content = (
         <React.Fragment>
           <Title text="TestMe"/>
           <Button handleClick={this.handleButtonClick}/>
         </React.Fragment>
       );
-    } else if(this.state.step == "question"){
-
+    } else if(this.state.step === "question"){
       content = (
         <Question 
+        getCorrectAnswerIndex = {this.getCorrectAnswerIndex}
         questionNum = {this.state.question.currentQuestionNumber}
         question={this.state.question.data} 
         checkAnswer={this.isTheAnswerCorrect} 
         handleAnswer={this.handleAnswer}/>
       );
-    } else if(this.state.step == "finish") {
+    } else if(this.state.step === "finish") {
       let stats = Object.keys(this.state.stats).map((key)=>{
-        console.log(this.state.stats[key]);
         return <p key={key}>Pytanie nr {this.state.stats[key][0]}: {this.state.stats[key][1] ? "poprawnie" : "niepoprawnie"}</p>;
       });
       content = (
@@ -115,10 +125,15 @@ class App extends Component {
           {stats}
         </React.Fragment>
       );
+    } else if(this.state.step === "choose") {
+      content = (
+        <TestChoose />
+      );
     }
 
     return (
       <div className="App">
+        <Menu changeAppStep = {this.changeAppStep}/>
         <section className="container d-flex flex-column justify-content-center align-items-center">
           {content}
         </section>
