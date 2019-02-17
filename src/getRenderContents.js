@@ -6,7 +6,7 @@ import TestChoose from './TestChoose';
 import About from './About';
 import Finish from './Finish';
 
-const getRenderContents = (state, getCorrectAnswerIndex, isTheAnswerCorrect, handleAnswer, handleButtonClick) => {
+const getRenderContents = (state, getCorrectAnswerIndex, isTheAnswerCorrect, handleAnswer, handleButtonClick, handleChoosetest) => {
     let content;
     if(state.step === "start") {
         content = (
@@ -30,7 +30,7 @@ const getRenderContents = (state, getCorrectAnswerIndex, isTheAnswerCorrect, han
         );
       } else if(state.step === "choose") {
         content = (
-          <TestChoose />
+          <TestChoose availableTests={state.options} handleChoosetest={handleChoosetest}/>
         );
       } else if(state.step === "about") {
           content = (

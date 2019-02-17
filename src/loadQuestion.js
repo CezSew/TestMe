@@ -1,5 +1,6 @@
-const json = require('./Tests/test_test.json');
-const loadQuestion = () => {
+
+const loadQuestion = (testName = 'test_test') => {
+    const json = require(`./Tests/${testName}.json`);
     return json;
 }
 

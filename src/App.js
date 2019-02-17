@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import loadQuestion from './loadQuestion';
 import getRenderContents from './getRenderContents';
+import getOptions from './getOptions';
 import Menu from './Menu';
 import './App.css';
 
@@ -17,6 +18,10 @@ class App extends Component {
     this.getQuestions = this.getQuestions.bind(this);
     this.getCorrectAnswerIndex = this.getCorrectAnswerIndex.bind(this);
     this.changeAppStep = this.changeAppStep.bind(this);
+    this.handleChoosetest = this.handleChoosetest.bind(this);
+    this.generateNewQuestion = this.generateNewQuestion.bind(this);
+
+    const options = getOptions();
 
     this.state = {
       step: "start",
@@ -28,9 +33,12 @@ class App extends Component {
         isTheAnswerCorrect: false
       },
       stats: [],
-      questionsCount: ''
+      questionsCount: '',
+      questionTimeout: 1500,
+      options: options
     }
   }
+
 
   prepareQuestion = () => {
     let question = this.getQuestions();
@@ -47,7 +55,7 @@ class App extends Component {
         correctIndex: question[questionNum].correct
       },
       questionsCount: questionsCount,
-      questionTimeout: 1500
+      chosenTest: 'test_test'
     });
   }
 
@@ -61,7 +69,7 @@ class App extends Component {
   }
 
   getQuestions = () => {
-    return Object.entries(this.state.question.data).length !== 0 ? this.state.question.data : loadQuestion();
+    return Object.entries(this.state.question.data).length !== 0 ? this.state.question.data : loadQuestion(this.state.chosenTest);
   }
 
   setQuestionNumber = (questionNumber, questionsCount) => {
@@ -74,6 +82,26 @@ class App extends Component {
     let isCorrect = (index === correctIndex);
     return isCorrect; 
   }
+
+  handleChoosetest = (testName) => {
+    this.generateNewQuestion(testName);
+  }
+
+  generateNewQuestion = (testName) => {
+    let question = loadQuestion(testName);
+    let questionsCount = Object.keys(question).length;
+    this.setState({
+      step:'question', 
+      question: { 
+        data: question,
+        currentQuestionNumber: 1,
+        correctIndex: question[1].correct
+      },
+      questionsCount: questionsCount,
+      chosenTest: testName,
+      stats: []
+    });
+  } 
 
   handleAnswer = (isCorrect) => {
     let currentNumber = this.state.question.currentQuestionNumber;
@@ -96,7 +124,7 @@ class App extends Component {
   }
 
   render() {
-    let renderContents = getRenderContents(this.state, this.getCorrectAnswerIndex, this.isTheAnswerCorrect, this.handleAnswer, this.handleButtonClick );
+    let renderContents = getRenderContents(this.state, this.getCorrectAnswerIndex, this.isTheAnswerCorrect, this.handleAnswer, this.handleButtonClick, this.handleChoosetest );
   
     return (
       <div className="App">
