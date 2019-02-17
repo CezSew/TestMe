@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 const Title = ({text}) => (
     <h1 className="title text-center text-muted mb-5">

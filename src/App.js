@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import Button from './Button';
-import Title from './Title';
-import Question from './Question';
 import loadQuestion from './loadQuestion';
+import getRenderContents from './getRenderContents';
 import Menu from './Menu';
-import TestChoose from './TestChoose';
 import './App.css';
 
 class App extends Component {
@@ -99,43 +96,13 @@ class App extends Component {
   }
 
   render() {
-    let content;
-    if(this.state.step === "start") {
-      content = (
-        <React.Fragment>
-          <Title text="TestMe"/>
-          <Button handleClick={this.handleButtonClick}/>
-        </React.Fragment>
-      );
-    } else if(this.state.step === "question"){
-      content = (
-        <Question 
-        getCorrectAnswerIndex = {this.getCorrectAnswerIndex}
-        questionNum = {this.state.question.currentQuestionNumber}
-        question={this.state.question.data} 
-        checkAnswer={this.isTheAnswerCorrect} 
-        handleAnswer={this.handleAnswer}/>
-      );
-    } else if(this.state.step === "finish") {
-      let stats = Object.keys(this.state.stats).map((key)=>{
-        return <p key={key}>Pytanie nr {this.state.stats[key][0]}: {this.state.stats[key][1] ? "poprawnie" : "niepoprawnie"}</p>;
-      });
-      content = (
-        <React.Fragment>
-          {stats}
-        </React.Fragment>
-      );
-    } else if(this.state.step === "choose") {
-      content = (
-        <TestChoose />
-      );
-    }
-
+    let renderContents = getRenderContents(this.state, this.getCorrectAnswerIndex, this.isTheAnswerCorrect, this.handleAnswer, this.handleButtonClick );
+  
     return (
       <div className="App">
         <Menu changeAppStep = {this.changeAppStep}/>
-        <section className="container d-flex flex-column justify-content-center align-items-center">
-          {content}
+        <section className="app__contents container d-flex flex-column justify-content-center align-items-center">
+          {renderContents}
         </section>
       </div>
     );

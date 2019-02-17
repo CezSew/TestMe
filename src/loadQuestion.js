@@ -1,4 +1,4 @@
-const json = require('./Tests/js_test.json');
+const json = require('./Tests/test_test.json');
 const loadQuestion = () => {
     return json;
 }

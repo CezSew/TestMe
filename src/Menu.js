@@ -20,7 +20,7 @@ export default class Menu extends Component {
                     <li className="menu__item"><button className="menu__button">Load questions</button></li>
                     <li className="menu__item"><button onClick={this.handleButtonClick} data-step="choose" className="menu__button">Choose test</button></li>
                     <li className="menu__item"><button className="menu__button">Mode: Explorer</button></li>
-                    <li className="menu__item"><button className="menu__button">About</button></li>
+                    <li className="menu__item"><button onClick={this.handleButtonClick} data-step="about" className="menu__button">About</button></li>
                 </ul>
             </nav>
         );

@@ -22,7 +22,7 @@ export default class Answer extends Component {
     blockAnswers() {
         let elements = document.getElementsByClassName('question__answer');
         Object.keys(elements).map((key)=> {
-            elements[key].disabled = true;
+            return elements[key].disabled = true;
         });
     }
     assignClassName(el, elClass) {
