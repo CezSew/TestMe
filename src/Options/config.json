@@ -1,3 +1,14 @@
 {
-    "tests" : ["test_test", "js_test"]
+    "tests" : {
+        "0": {
+            "name":"test_test",
+            "imageURL": "",
+            "imageAlt": ""
+        },
+        "1": {
+            "name":"js_test",
+            "imageURL": "",
+            "imageAlt": ""
+        }
+    }
 }

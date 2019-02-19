@@ -99,3 +99,31 @@ button {
   background-color: #FADA5E;
   color: green;
 }
+
+.page-choose-test {
+
+}
+.page-choose-test__list {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+}
+.page-choose-test__item {
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+}
+.page-choose-test__image {
+  object-fit: cover;
+  width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+}
+.page-choose-test__title {
+  margin-bottom: 30px;
+}
+.page-choose-test__button {
+  padding: 0;
+}
