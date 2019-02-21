@@ -31,26 +31,26 @@ const fileLoadModule = () => {
 }
 
 const parseIntoObject = (file) => {
-    let objectFileContents = {... file};
     let test = {};
     let counter = 0;
     test.questions = [];
-    test.questions.answers = [];
     file.forEach((item, index) => {
         const questionIndex = getQuestionIndex(index);
         counter = correctCounter(counter);
-        console.log(counter);
-        test.questions[questionIndex] = test.questions[questionIndex] ? test.questions[questionIndex] : {};
+        test.questions[questionIndex] = objectDefine(test.questions[questionIndex]);
         if (index%5 === 0 || index === 0) {
             test.questions[questionIndex].question = item;
         } else {
-            test.questions[questionIndex].answers = test.questions[questionIndex].answers ? test.questions[questionIndex].answers : [];
-            test.questions[questionIndex].answers[counter] = item;
+            test.questions[questionIndex].answers = objectDefine(test.questions[questionIndex].answers);
+            if(isCorrect(item)) {
+                test.questions[questionIndex].answers[counter] = trimAnswer(item);
+                test.questions[questionIndex].correct = counter;
+            } else {
+                test.questions[questionIndex].answers[counter] = item;
+            };
         } 
         counter++;
     });
-
-    console.log(test);
 }
 
 const getQuestionIndex = (index) => {
@@ -59,8 +59,22 @@ const getQuestionIndex = (index) => {
 }
 
 const correctCounter = (counter) => {
-    counter = (counter === 4) ? 0 : counter;
+    counter = (counter === 5) ? 0 : counter;
     return counter;
 }
+
+const isCorrect = (answer) => {
+    let correct = answer[0] === "+" ? true : false;
+    return correct;
+}
+
+const trimAnswer = (answer) => {
+    answer.split(1, answer.length);
+    return answer;
+}
+
+const objectDefine = (object) => {
+    return object = object || {};
+} 
 
 export default fileLoadModule;
