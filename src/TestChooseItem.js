@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+
 export default class TestChooseItem extends Component {
     render () {
       let key = this.props.itemKey;
@@ -13,6 +14,7 @@ export default class TestChooseItem extends Component {
                     <img className="page-choose-test__image" src={imageURL} alt={imageAlt} />
                     {test[key].name}
                 </button>
-            </li>)
+            </li>
+        )
     }
 }

@@ -5,6 +5,7 @@ import Question from './Question';
 import TestChoose from './TestChoose';
 import About from './About';
 import Finish from './Finish';
+import TestLoad from './TestLoad';
 
 const getRenderContents = (state, getCorrectAnswerIndex, isTheAnswerCorrect, handleAnswer, handleButtonClick, handleChoosetest) => {
     let content;
@@ -36,7 +37,11 @@ const getRenderContents = (state, getCorrectAnswerIndex, isTheAnswerCorrect, han
           content = (
             <About />
           );
-      }
+      } else if(state.step === "load") {
+        content = (
+          <TestLoad />
+        );
+    }
 
       return content;
 }
