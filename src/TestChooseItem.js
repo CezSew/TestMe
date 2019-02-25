@@ -2,17 +2,34 @@ import React, { Component } from 'react';
 
 
 export default class TestChooseItem extends Component {
+    constructor(props) {
+        super(props); 
+
+        this.getName = this.getName.bind(this);
+    }
+
+    getName = (test, key) => {
+        let testName;
+        if(this.props.isUserTest) {
+            testName = test.name;
+        } else {
+            testName = test[key].name;
+        }
+
+        return testName;
+    }
+
     render () {
       let key = this.props.itemKey;
       let imageURL = this.props.imageURL;
       let imageAlt = this.props.imageAlt;
       let test = this.props.test;
-      console.log(key);
+      let testName = this.getName(test, key);
         return (
             <li className="page-choose-test__item" key={key}>
-                <button className="page-choose-test__button" onClick={() => { this.props.handleChoosetest(test[key].name)}}>
+                <button className="page-choose-test__button" onClick={() => { this.props.handleChoosetest(testName)}}>
                     <img className="page-choose-test__image" src={imageURL} alt={imageAlt} />
-                    {test[key].name}
+                    {testName}
                 </button>
             </li>
         )

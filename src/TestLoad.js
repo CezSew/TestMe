@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import fileLoadModule from './loadFile';
 
+
 export default class TestLoad extends Component {
     componentDidMount() {
         fileLoadModule();

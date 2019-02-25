@@ -20,6 +20,7 @@ class App extends Component {
     this.changeAppStep = this.changeAppStep.bind(this);
     this.handleChoosetest = this.handleChoosetest.bind(this);
     this.generateNewQuestion = this.generateNewQuestion.bind(this);
+    this.getQuestionsCount = this.getQuestionsCount.bind(this);
 
     const options = getOptions();
 
@@ -43,10 +44,10 @@ class App extends Component {
   prepareQuestion = () => {
     let question = this.getQuestions();
     let currentQuestionNumber = this.state.question.currentQuestionNumber;
-    let questionsCount = Object.keys(question).length;
+    let questionsCount = this.getQuestionsCount(question);
     let questionNum = this.setQuestionNumber(currentQuestionNumber, questionsCount);
     let step = this.setStep(questionNum, currentQuestionNumber);
-    
+
     this.setState({
       step:step, 
       question: { 
@@ -57,6 +58,17 @@ class App extends Component {
       questionsCount: questionsCount,
       chosenTest: 'test_test'
     });
+  }
+
+  getQuestionsCount = (question) => {
+    let length;
+    if(question.name) {
+      length = Object.keys(question).length - 1;
+    } else {
+      length = Object.keys(question).length;
+    }
+    
+    return length;
   }
 
   setStep = (questionNumber, currentQuestionNumber) => {

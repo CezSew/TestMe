@@ -1,5 +1,6 @@
-const fileLoadModule = () => {
+import setLocalStorage from './setLocalStorage';
 
+const fileLoadModule = () => {
     const holder = document.getElementById('holder');
     const state = document.getElementById('status');
     if (typeof window.FileReader === 'undefined') {
@@ -22,39 +23,43 @@ const fileLoadModule = () => {
         reader = new FileReader();
         reader.onload = function(event) {
             let fileContents = event.target.result.split(/\r?\n/);
-            parseIntoObject(fileContents);
+            let test = parseIntoObject(fileContents);
+            test.name = 'user-test';
+            setLocalStorage(test, 'user-test');
         };
         reader.readAsText(file);
         return false;
     };
-    
 }
 
 const parseIntoObject = (file) => {
     let test = {};
     let counter = 0;
-    test.questions = [];
     file.forEach((item, index) => {
         const questionIndex = getQuestionIndex(index);
         counter = correctCounter(counter);
-        test.questions[questionIndex] = objectDefine(test.questions[questionIndex]);
         if (index%5 === 0 || index === 0) {
-            test.questions[questionIndex].question = item;
+            test[questionIndex] = objectDefine(test[questionIndex]);
+            test[questionIndex].question = item;
         } else {
-            test.questions[questionIndex].answers = objectDefine(test.questions[questionIndex].answers);
+            test[questionIndex] = objectDefine(test[questionIndex]);
+            test[questionIndex].answers = objectDefine(test[questionIndex].answers);
+            test[questionIndex].answers[counter] = item;
             if(isCorrect(item)) {
-                test.questions[questionIndex].answers[counter] = trimAnswer(item);
-                test.questions[questionIndex].correct = counter;
+                test[questionIndex].answers[counter] = trimAnswer(item);
+                test[questionIndex].correct = String(counter);
             } else {
-                test.questions[questionIndex].answers[counter] = item;
+                test[questionIndex].answers[counter] = item;
             };
-        } 
+        }
+
         counter++;
     });
+    return test;
 }
 
 const getQuestionIndex = (index) => {
-    let questionIndex = Math.floor(index / 5);
+    let questionIndex = Math.floor(index / 5) + 1;
     return questionIndex;
 }
 
@@ -69,7 +74,7 @@ const isCorrect = (answer) => {
 }
 
 const trimAnswer = (answer) => {
-    answer.split(1, answer.length);
+    answer = answer.substr(1);
     return answer;
 }
 
