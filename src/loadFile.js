@@ -38,22 +38,24 @@ const parseIntoObject = (file) => {
     file.forEach((item, index) => {
         const questionIndex = getQuestionIndex(index);
         counter = correctCounter(counter);
-        if (index%5 === 0 || index === 0) {
-            test[questionIndex] = objectDefine(test[questionIndex]);
-            test[questionIndex].question = item;
-        } else {
-            test[questionIndex] = objectDefine(test[questionIndex]);
-            test[questionIndex].answers = objectDefine(test[questionIndex].answers);
-            test[questionIndex].answers[counter] = item;
-            if(isCorrect(item)) {
-                test[questionIndex].answers[counter] = trimAnswer(item);
-                test[questionIndex].correct = String(counter);
+        if(item) {
+            if (index%5 === 0 || index === 0) {
+                test[questionIndex] = objectDefine(test[questionIndex]);
+                test[questionIndex].question = item;
             } else {
+                test[questionIndex] = objectDefine(test[questionIndex]);
+                test[questionIndex].answers = objectDefine(test[questionIndex].answers);
                 test[questionIndex].answers[counter] = item;
-            };
+                if(isCorrect(item)) {
+                    test[questionIndex].answers[counter] = trimAnswer(item);
+                    test[questionIndex].correct = String(counter);
+                } else {
+                    test[questionIndex].answers[counter] = item;
+                };
+            }
+            counter++;
         }
-
-        counter++;
+        
     });
     return test;
 }
