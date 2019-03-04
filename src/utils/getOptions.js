@@ -1,4 +1,4 @@
-const options = require('./Options/config.json');
+const options = require('../Options/config.json');
 
 const getOptions = () => {
     return options;

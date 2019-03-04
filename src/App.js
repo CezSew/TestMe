@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import loadQuestion from './loadQuestion';
-import getRenderContents from './getRenderContents';
-import getOptions from './getOptions';
-import Menu from './Menu';
-import './App.css';
+import loadQuestion from './utils/loadQuestion';
+import getRenderContents from './utils/getRenderContents';
+import getOptions from './utils/getOptions';
+import Menu from './components/Menu/Menu';
+
 
 class App extends Component {
   constructor(props) {

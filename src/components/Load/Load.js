@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import fileLoadModule from './loadFile';
+import fileLoadModule from '../../utils/loadFile';
 
 
-export default class TestLoad extends Component {
+export default class Load extends Component {
     componentDidMount() {
         fileLoadModule();
     }

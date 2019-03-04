@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import TestChooseItem from './TestChooseItem';
+import Item from './Item/Item';
 
-export default class TestChoose extends Component {
+export default class Choose extends Component {
     constructor(props) {
         super(props);
         
@@ -11,7 +11,7 @@ export default class TestChoose extends Component {
     setUserTestItem = (key) => {
         let storage = JSON.parse(localStorage.getItem('user-test'));
         if(storage) {
-            return <TestChooseItem test={storage} isUserTest={true} key={key} itemKey={1} imageURL='img/no-image.jpg' alt='No image' handleChoosetest={this.props.handleChoosetest}/>
+            return <Item test={storage} isUserTest={true} key={key} itemKey={1} imageURL='img/no-image.jpg' alt='No image' handleChoosetest={this.props.handleChoosetest}/>
         } else {
             return '';
         }
@@ -23,7 +23,7 @@ export default class TestChoose extends Component {
         let tests =  Object.keys(testObj).map((key) => {
             let imageURL = testObj[key].imageURL ? testObj[key].imageURL : 'img/no-image.jpg';
             lastKey = key;
-            return <TestChooseItem test={testObj} key={key} itemKey={key} imageURL={imageURL} alt={testObj[key].imageAlt} handleChoosetest={this.props.handleChoosetest}/>
+            return <Item test={testObj} key={key} itemKey={key} imageURL={imageURL} alt={testObj[key].imageAlt} handleChoosetest={this.props.handleChoosetest}/>
           });
         let userTest = this.setUserTestItem(lastKey + 1);
         return (

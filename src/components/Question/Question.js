@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Answer from './Answer';
+import Answer from './Answer/Answer';
 
 export default class Question extends Component {
     render () {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 
-export default class TestChooseItem extends Component {
+export default class Item extends Component {
     constructor(props) {
         super(props); 
 
