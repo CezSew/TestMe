@@ -1,11 +1,11 @@
-  import generateNewQuestion from './generateNewQuestion';
+  import generateNewTest from './generateNewTest';
   
   /**
    * Generates new question for the given test name
    * @param {string} testName
    */
   const handleChoosetest = (testName) => {
-    generateNewQuestion(testName);
+    generateNewTest(testName);
   }
 
   export default handleChoosetest;

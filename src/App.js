@@ -11,7 +11,7 @@ class App extends Component {
     this.prepareQuestion = this.prepareQuestion.bind(this);
     this.changeAppStep = this.changeAppStep.bind(this);
     this.handleChoosetest = this.handleChoosetest.bind(this);
-    this.generateNewQuestion = this.generateNewQuestion.bind(this);
+    this.generateNewTest= this.generateNewTest.bind(this);
     this.getCorrectAnswersCountOfQuestion = this.getCorrectAnswersCountOfQuestion.bind(this);
     this.setCorrectAnswersCountOfQuestion = this.setCorrectAnswersCountOfQuestion.bind(this);
 
@@ -72,14 +72,14 @@ class App extends Component {
    * @param {string} testName
    */
   handleChoosetest = (testName) => {
-    this.generateNewQuestion(testName);
+    this.generateNewTest(testName);
   }
 
   /**
    * Sets new state values regarding question
    * @param {string} testName
    */
-  generateNewQuestion = (testName) => {
+  generateNewTest = (testName) => {
     let question = utils.loadQuestion(testName);
     let questionsCount = Object.keys(question).length;
     this.setState({
@@ -90,7 +90,8 @@ class App extends Component {
         correctIndex: question[1].correct
       },
       questionsCount: questionsCount,
-      chosenTest: testName
+      chosenTest: testName,
+      stats: []
     });
   } 
 
