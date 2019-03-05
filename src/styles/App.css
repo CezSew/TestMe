@@ -25,6 +25,7 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  background-color: #fff;
   border-right: 1px solid #eee;
   -webkit-box-shadow: -1px 0px 57px -18px rgba(0,0,0,0.75);
   -moz-box-shadow: -1px 0px 57px -18px rgba(0,0,0,0.75);

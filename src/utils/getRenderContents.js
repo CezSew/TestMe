@@ -22,8 +22,9 @@ const getRenderContents = (state, getCorrectAnswerIndex, isTheAnswerCorrect, han
           getCorrectAnswerIndex = {getCorrectAnswerIndex}
           questionNum = {state.question.currentQuestionNumber}
           question={state.question.data} 
-          checkAnswer={isTheAnswerCorrect} 
-          handleAnswer={handleAnswer}/>
+          isTheAnswerCorrect={isTheAnswerCorrect} 
+          handleAnswer={handleAnswer}
+          state={state}/>
         );
       } else if(state.step === "finish") {
         content = (

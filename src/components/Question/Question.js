@@ -12,7 +12,8 @@ export default class Question extends Component {
                 getCorrectAnswerIndex={this.props.getCorrectAnswerIndex}
                 questionNum={this.props.questionNum}
                 question={question} 
-                checkAnswer={this.props.checkAnswer} 
+                state={this.props.state}
+                isTheAnswerCorrect={this.props.isTheAnswerCorrect} 
                 handleAnswer={this.props.handleAnswer}/>
             </section>
         )

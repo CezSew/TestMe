@@ -8,9 +8,9 @@ export default class Answer extends Component {
         this.blockAnswers = this.blockAnswers.bind(this);
     }
     handleClick = (index, that) => {
-        let isAnswerCorrect = this.props.checkAnswer(index);
+        let isAnswerCorrect = this.props.isTheAnswerCorrect(index, this.props.state);
         let elClass = isAnswerCorrect ? "correct" : "incorrect";
-        if(!isAnswerCorrect) this.showCorrect(this.props.getCorrectAnswerIndex() - 1);
+        if(!isAnswerCorrect) this.showCorrect(this.props.getCorrectAnswerIndex(this.props.state) - 1);
         this.assignClassName(that, elClass);
         this.blockAnswers();
         this.props.handleAnswer(isAnswerCorrect);
@@ -31,7 +31,6 @@ export default class Answer extends Component {
     render () {
         const question = this.props.question;
         const answers = question.answers;
-        console.log(question);
         let answersElement = Object.keys(answers).map((key)=>{
             return <button className="question__answer " onClick={(e)=>{this.handleClick(key, e.target)}} key={this.props.questionNum + ':' + key}>{answers[key]}</button>;
         });
