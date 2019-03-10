@@ -28,7 +28,7 @@ class App extends Component {
       stats: [],
       questionsCount: '',
       questionTimeout: 1500,
-      options: options
+      options: options,
     }
   }
 
@@ -62,7 +62,6 @@ class App extends Component {
     let randomNumber = Math.floor(Math.random() * questionsCount) + 1;
     randomNumber = (randomNumber === currentQuestionNumber) ? ((randomNumber - 1 === 0) ? randomNumber + 1 : randomNumber - 1 ) : randomNumber;
     randomNumber = randomNumber === 0 ? 1 : randomNumber;
-    console.log(randomNumber);
     return randomNumber;
   }
 
@@ -94,7 +93,8 @@ class App extends Component {
       question: { data: question, currentQuestionNumber: 1, correctIndex: question[1].correct},
       questionsCount: questionsCount,
       chosenTest: testName,
-      stats: []
+      stats: [],
+      repeat: false
     });
   } 
 
