@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import PropTypes from 'prop-types';
 
 export default class Item extends Component {
     constructor(props) {
@@ -20,11 +20,11 @@ export default class Item extends Component {
     }
 
     render () {
-      let key = this.props.itemKey;
-      let imageURL = this.props.imageURL;
-      let imageAlt = this.props.imageAlt;
-      let test = this.props.test;
-      let testName = this.getName(test, key);
+        let key = this.props.itemKey;
+        let imageURL = this.props.imageURL;
+        let imageAlt = this.props.imageAlt;
+        let test = this.props.test;
+        let testName = this.getName(test, key);
         return (
             <li className="page-choose-test__item" key={key}>
                 <button className="page-choose-test__button" onClick={() => { this.props.handleChoosetest(testName)}}>
@@ -34,4 +34,13 @@ export default class Item extends Component {
             </li>
         )
     }
+}
+
+Item.propTypes = {
+    imageURL: PropTypes.string.isRequired,
+    itemKey: PropTypes.number.isRequired,
+    imageAlt: PropTypes.string,
+    test: PropTypes.object.isRequired,
+    handleChoosetest: PropTypes.func.isRequired,
+    isUserTest: PropTypes.bool
 }

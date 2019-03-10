@@ -23,7 +23,7 @@ export default class Choose extends Component {
         let tests =  Object.keys(testObj).map((key) => {
             let imageURL = testObj[key].imageURL ? testObj[key].imageURL : 'img/no-image.jpg';
             lastKey = key;
-            return <Item test={testObj} key={key} itemKey={key} imageURL={imageURL} alt={testObj[key].imageAlt} handleChoosetest={this.props.handleChoosetest}/>
+            return <Item test={testObj} key={key} itemKey={parseInt(key, 10)} imageURL={imageURL} alt={testObj[key].imageAlt} handleChoosetest={this.props.handleChoosetest}/>
           });
         let userTest = this.setUserTestItem(lastKey + 1);
         return (

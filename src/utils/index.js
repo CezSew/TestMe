@@ -7,6 +7,11 @@ import getQuestions from './getQuestions';
 import setQuestionNumber from './setQuestionNumber';
 import isTheAnswerCorrect from './isTheAnswerCorrect';
 import getCorrectAnswerIndex from './getCorrectAnswerIndex';
+import getCorrectAnswersCountOfQuestion from './getCorrectAnswersCountOfQuestion';
+import setCorrectAnswersCountOfQuestion from './setCorrectAnswersCountOfQuestion';
+import areSomeAnswersIncorrect from './areSomeAnswersIncorrect';
+import getIncorrectAnswersIndexes from './getIncorrectAnswersIndexes';
+import isLastQuestion from './isLastQuestion';
 //import handleChoosetest from './handleChoosetest';
 
 export {
@@ -19,5 +24,10 @@ export {
     getQuestions, 
     setQuestionNumber, 
     isTheAnswerCorrect, 
+    getCorrectAnswersCountOfQuestion,
+    setCorrectAnswersCountOfQuestion,
+    getIncorrectAnswersIndexes,
+    areSomeAnswersIncorrect,
+    isLastQuestion
     //handleChoosetest
 };

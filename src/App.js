@@ -10,10 +10,9 @@ class App extends Component {
     this.handleAnswer = this.handleAnswer.bind(this);
     this.prepareQuestion = this.prepareQuestion.bind(this);
     this.changeAppStep = this.changeAppStep.bind(this);
-    this.handleChoosetest = this.handleChoosetest.bind(this);
     this.generateNewTest= this.generateNewTest.bind(this);
-    this.getCorrectAnswersCountOfQuestion = this.getCorrectAnswersCountOfQuestion.bind(this);
-    this.setCorrectAnswersCountOfQuestion = this.setCorrectAnswersCountOfQuestion.bind(this);
+    this.getRNG  = this.getRNG.bind(this);
+    this.getRandomQuestion = this.getRandomQuestion.bind(this);
 
     const options = utils.getOptions();
 
@@ -41,18 +40,38 @@ class App extends Component {
     let currentQuestionNumber = this.state.question.currentQuestionNumber;
     let questionsCount = utils.getQuestionsCount(question);
     let questionNum = utils.setQuestionNumber(currentQuestionNumber, questionsCount);
-    let step = utils.setStep(questionNum, currentQuestionNumber);
+    let step = utils.setStep(questionNum, currentQuestionNumber, questionsCount, this.state.stats);
+    let repeat = false;
+    if(this.state.repeat || (utils.areSomeAnswersIncorrect(this.state.stats) && utils.isLastQuestion(currentQuestionNumber, questionsCount))) {
+      step = 'question';
+      questionNum = this.getRandomQuestion(this.state.question.data, questionsCount, this.state.stats, currentQuestionNumber);
+      repeat = true;
+    } 
+    // if(this.state.stats.length > 0) this.getRNG(this.state.stats, questionNum, questionsCount);
 
     this.setState({
       step:step, 
-      question: { 
-        data: question,
-        currentQuestionNumber: questionNum,
-        correctIndex: question[questionNum].correct
-      },
+      question: { data: question, currentQuestionNumber: questionNum, correctIndex: question[questionNum].correct},
       questionsCount: questionsCount,
-      chosenTest: 'test_test'
+      chosenTest: 'test_test',
+      repeat: repeat
     });
+  }
+
+  getRandomQuestion = (test, questionsCount, stats, currentQuestionNumber) => {
+    let randomNumber = Math.floor(Math.random() * questionsCount) + 1;
+    randomNumber = (randomNumber === currentQuestionNumber) ? ((randomNumber - 1 === 0) ? randomNumber + 1 : randomNumber - 1 ) : randomNumber;
+    randomNumber = randomNumber === 0 ? 1 : randomNumber;
+    console.log(randomNumber);
+    return randomNumber;
+  }
+
+  getRNG = (stats, questionNum, questionsCount) => {
+    // console.log('test');
+    // console.log(questionNum);
+    // if(questionNum === questionsCount) console.log('last question');
+    // if last question
+    //   if more than 2 answers were incorrect dont change step to finish, 
   }
 
   /**
@@ -61,18 +80,6 @@ class App extends Component {
    */
   changeAppStep = (step) => {
     this.setState({step:step});
-  }
-
-
-
-
-
-  /**
-   * Generates new question for the given test name
-   * @param {string} testName
-   */
-  handleChoosetest = (testName) => {
-    this.generateNewTest(testName);
   }
 
   /**
@@ -84,11 +91,7 @@ class App extends Component {
     let questionsCount = Object.keys(question).length;
     this.setState({
       step:'question', 
-      question: { 
-        data: question,
-        currentQuestionNumber: 1,
-        correctIndex: question[1].correct
-      },
+      question: { data: question, currentQuestionNumber: 1, correctIndex: question[1].correct},
       questionsCount: questionsCount,
       chosenTest: testName,
       stats: []
@@ -101,38 +104,14 @@ class App extends Component {
    */
   handleAnswer = (isCorrect) => {
     let currentNumber = this.state.question.currentQuestionNumber;
-    let correctAnswersCount = this.getCorrectAnswersCountOfQuestion(currentNumber - 1);
+    let correctAnswersCount = utils.getCorrectAnswersCountOfQuestion(currentNumber - 1, this.state.stats);
     this.setState({
-      stats: [...this.state.stats, [currentNumber, isCorrect, this.setCorrectAnswersCountOfQuestion(correctAnswersCount, isCorrect)]]
+      stats: [...this.state.stats, [currentNumber, isCorrect, utils.setCorrectAnswersCountOfQuestion(correctAnswersCount, isCorrect)]]
     }, () => {
       setTimeout(()=> {
         this.prepareQuestion();
       }, this.state.questionTimeout);
     });
-  }
-
-  /**
-   * Returns the number of times the question was answered correctly
-   * @param {number} index
-   * @returns {number} Returns the number of times the question was answered correctly
-   */
-  getCorrectAnswersCountOfQuestion = (index) => {
-    if(index >= 0 && this.state.stats[index]) {
-      return this.state.stats[index][2];
-    } else {
-      return 0;
-    }
-  }
-
-  /**
-   * Returns how many times question has been answered correctly
-   * @param {number} numberOfCorrectAnswers
-   * @param {boolean} isCorrect
-   * @returns {number} Returns the count of correct answers
-   */
-  setCorrectAnswersCountOfQuestion = (numberOfCorrectAnswers, isCorrect) => {
-    let count = isCorrect ? numberOfCorrectAnswers + 1 : numberOfCorrectAnswers;
-    return count;
   }
 
   /**
@@ -142,10 +121,8 @@ class App extends Component {
     this.prepareQuestion();
   }   
 
-
   render() {
-    let renderContents = utils.getRenderContents(this.state, utils.getCorrectAnswerIndex, utils.isTheAnswerCorrect, this.handleAnswer, this.handleButtonClick, this.handleChoosetest );
-  
+    let renderContents = utils.getRenderContents(this.state, utils.getCorrectAnswerIndex, utils.isTheAnswerCorrect, this.handleAnswer, this.handleButtonClick, this.generateNewTest );
     return (
       <div className="App">
         <Menu changeAppStep = {this.changeAppStep}/>

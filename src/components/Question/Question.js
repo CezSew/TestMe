@@ -15,6 +15,7 @@ export default class Question extends Component {
                 state={this.props.state}
                 isTheAnswerCorrect={this.props.isTheAnswerCorrect} 
                 handleAnswer={this.props.handleAnswer}/>
+                {this.props.state.repeat ? (<p className="random">Random questions enabled</p>) : '' }
             </section>
         )
     }
