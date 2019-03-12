@@ -126,7 +126,7 @@ class App extends Component {
     return (
       <div className="App">
         <Menu changeAppStep = {this.changeAppStep}/>
-        <section className="app__contents container d-flex flex-column justify-content-center align-items-center">
+        <section className="app__contents container d-flex flex-column justify-content-center align-items-center pt-4">
           {renderContents}
         </section>
       </div>

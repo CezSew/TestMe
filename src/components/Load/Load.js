@@ -9,10 +9,10 @@ export default class Load extends Component {
     render () {
         
         return (
-        <article>
-            <div id="holder"></div> 
+        <div>
+            <div class="app__file-holder" id="holder"></div> 
             <p id="status">Drop the .txt file</p>
-        </article>
+        </div>
         )
     }
 }

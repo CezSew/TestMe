@@ -26,10 +26,10 @@ export default class Item extends Component {
         let test = this.props.test;
         let testName = this.getName(test, key);
         return (
-            <li className="page-choose-test__item" key={key}>
+            <li className="page-choose-test__item m-2" key={key}>
                 <button className="page-choose-test__button" onClick={() => { this.props.handleChoosetest(testName)}}>
                     <img className="page-choose-test__image" src={imageURL} alt={imageAlt} />
-                    {testName}
+                    <div className="page-choose-test__name p-3 bg-secondary text-white">{testName}</div>
                 </button>
             </li>
         )
