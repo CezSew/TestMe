@@ -7,6 +7,7 @@ import About from '../components/About/About';
 import Finish from '../components/Finish/Finish';
 import Load from '../components/Load/Load';
 
+
 const getRenderContents = (state, getCorrectAnswerIndex, isTheAnswerCorrect, handleAnswer, handleButtonClick, handleChoosetest) => {
     let content;
     if(state.step === "start") {
