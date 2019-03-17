@@ -38,7 +38,7 @@ class App extends Component {
  * Sets state values dependant on question
  */
   prepareQuestion = () => {
-    let question = utils.getQuestions(this.state.question.data, this.state.chosenTest);
+    let question = Object.assign({} , utils.getQuestions(this.state.question.data, this.state.chosenTest));
     let currentQuestionNumber = this.state.question.currentQuestionNumber;
     let questionsCount = utils.getQuestionsCount(question);
     let questionNum = utils.setQuestionNumber(currentQuestionNumber, questionsCount);
