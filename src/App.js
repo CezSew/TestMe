@@ -15,13 +15,6 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.handleButtonClick = this.handleButtonClick.bind(this);
-    this.handleAnswer = this.handleAnswer.bind(this);
-    this.prepareQuestion = this.prepareQuestion.bind(this);
-    this.changeAppStep = this.changeAppStep.bind(this);
-    this.generateNewTest= this.generateNewTest.bind(this);
-    this.getRNG  = this.getRNG.bind(this);
-    this.getRandomQuestion = this.getRandomQuestion.bind(this);
 
     const options = utils.getOptions();
 
@@ -51,6 +44,7 @@ class App extends Component {
     let questionNum = utils.setQuestionNumber(currentQuestionNumber, questionsCount);
     let step = utils.setStep(questionNum, currentQuestionNumber, questionsCount, this.state.stats);
     let repeat = false;
+    
     if(this.state.repeat || (utils.areSomeAnswersIncorrect(this.state.stats) && utils.isLastQuestion(currentQuestionNumber, questionsCount))) {
       step = 'question';
       questionNum = this.getRandomQuestion(this.state.question.data, questionsCount, this.state.stats, currentQuestionNumber);
@@ -65,6 +59,8 @@ class App extends Component {
       chosenTest: 'test_test',
       repeat: repeat
     }, function() {
+      step === 'finish' ? 
+      this.props.history.push('/summary') :
       this.props.history.push('/question');
     });
 
@@ -136,36 +132,43 @@ class App extends Component {
   }   
 
   render() {
-    let renderContents = utils.getRenderContents(this.state, utils.getCorrectAnswerIndex, utils.isTheAnswerCorrect, this.handleAnswer, this.handleButtonClick, this.generateNewTest );
     return (
         <div className="App">
           <Menu changeAppStep = {this.changeAppStep}/>
           <section className="app__contents container d-flex flex-column justify-content-center align-items-center pt-4">
-            {/* {renderContents} */}
             <Route path="/question" exact render={ () =>
               <Question 
-                getCorrectAnswerIndex = {utils.getCorrectAnswerIndex}
-                questionNum = {this.state.question.currentQuestionNumber}
-                question={this.state.question.data} 
-                isTheAnswerCorrect={utils.isTheAnswerCorrect} 
+                utils={utils}
                 handleAnswer={this.handleAnswer}
-                state={this.state}/>
+                state={this.state}
+              />
               } />
             <Route path="/" exact render={ () => 
               <React.Fragment>
-                <Title text="TestMe"/>
-                <Button handleClick={this.handleButtonClick}/>
+                <Title text="Let's start"/>
+                <Button 
+                  handleClick={this.handleButtonClick} 
+                  text="Begin the test"
+                />
               </React.Fragment>
             }/>
             <Route path="/load-questions" exact render={ () => 
               <Load />
             }/>
             <Route path="/choose-test" exact render={ () => 
-              <Choose availableTests={this.state.options} handleChoosetest={this.generateNewTest}/>
+              <Choose 
+                availableTests={this.state.options} 
+                handleChoosetest={this.generateNewTest}
+              />
             }/>
             <Route path="/about" exact render={ () => 
               <About />
             }/>
+            <Route path="/summary" exact render={ () => 
+              <Finish 
+                stats={this.state.stats} 
+              />
+            } />
           </section>
         </div>
     );

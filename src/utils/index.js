@@ -1,5 +1,5 @@
 import loadQuestion from './loadQuestion';
-import getRenderContents from './getRenderContents';
+// import getRenderContents from './getRenderContents';
 import getOptions from './getOptions';
 import getQuestionsCount from './getQuestionsCount';
 import setStep from './setStep';
@@ -17,7 +17,7 @@ import isLastQuestion from './isLastQuestion';
 export {
     loadQuestion, 
     getCorrectAnswerIndex, 
-    getRenderContents, 
+    // getRenderContents, 
     getOptions, 
     getQuestionsCount, 
     setStep, 

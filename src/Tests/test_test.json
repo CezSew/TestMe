@@ -1,31 +1,31 @@
 {
     "1": {
-        "question": "Dlaczego niebo jest niebieskie?",
+        "question": "Do people lie?",
         "answers": {
-            "1": "Bóg tak chciał",
-            "2": "Światło widzialne w zakresie niebieskim jest rozpraszane w atmosferze",
-            "3": "Bo jest zimne",
-            "4": "Bo Ziemia jest płaska"
+            "1": "Noooo",
+            "2": "Everybody lies",
+            "3": "Yes, you can trust me",
+            "4": "Only politicians"
         },
         "correct": "2"
     },
     "2": {
-        "question": "Dlaczego niebo jest niebieskie?2",
+        "question": "Car needs to travel 2 miles across a hill. First mile, which is uphill, the car goes 15 mph. Now it needs to drive one mile down the hill. How fast must the car go downhill, so it averages 30 mph on those 2 miles?",
         "answers": {
-            "1": "Bóg tak chciał",
-            "2": "Światło widzialne w zakresie niebieskim jest rozpraszane w atmosferze",
-            "3": "Bo jest zimne",
-            "4": "Bo Ziemia jest płaska"
+            "1": "45 mph",
+            "2": "It is impossible",
+            "3": "60 mph",
+            "4": "30 mph"
         },
         "correct": "2"
     },
     "3": {
-        "question": "Dlaczego niebo jest niebieskie?3",
+        "question": "The more you take, the more you leave behind. What am I?",
         "answers": {
-            "1": "Bóg tak chciał",
-            "2": "Światło widzialne w zakresie niebieskim jest rozpraszane w atmosferze",
-            "3": "Bo jest zimne",
-            "4": "Bo Ziemia jest płaska"
+            "1": "Pain",
+            "2": "Footsteps",
+            "3": "Water",
+            "4": "Drugs"
         },
         "correct": "2"
     }

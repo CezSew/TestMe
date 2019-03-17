@@ -1,34 +1,23 @@
 import React, { Component } from 'react';
+import Error from '../Error/Error';
 
-export default class Finish extends Component {
-    constructor(props) {
-        super(props);
-        this.getTotalQuestions = this.getTotalQuestions.bind(this);
-    }
-
-    getTotalQuestions = () => {
-        return this.props.stats.length;
-    }
-
-    getCorrectNumber = () => {
+const Finish = (props) => {
+    const getCorrectNumber = () => {
         let count = 0;
-        this.props.stats.forEach((item) => {
+        props.stats.forEach((item) => {
             if (item[1]) count++;
         });
         return count;
     }
-
-    render () {
-        let stats = Object.keys(this.props.stats).map((key)=>{
-            return <p key={key}>Pytanie nr {this.props.stats[key][0]}: {this.props.stats[key][1] ? "poprawnie" : "niepoprawnie"}</p>;
-          });
-        let correctNumber = this.getCorrectNumber();
-        let total = this.getTotalQuestions();
-        return (
-            <React.Fragment>
-            {stats}
-            {correctNumber}/{total}
-          </React.Fragment>
-        )
-    }
+    let stats = Object.keys(props.stats).map((key)=> <p key={key}>Question {props.stats[key][0]}: {props.stats[key][1] ? "correct" : "incorrect"}</p>);
+    let correctNumber = getCorrectNumber();
+    let total = props.stats.length;
+    const finalStats = (<React.Fragment>{stats}{correctNumber}/{total}</React.Fragment> );
+    const error = (<React.Fragment><Error error="There are no stats available."/></React.Fragment>);
+    let renderContents = stats.length > 0 ? finalStats : error;
+    return (
+        <React.Fragment>{renderContents}</React.Fragment>
+    )
 }
+
+export default Finish;
