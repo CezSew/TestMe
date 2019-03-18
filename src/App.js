@@ -138,9 +138,9 @@ class App extends Component {
           <section className="app__contents container d-flex flex-column justify-content-center align-items-center pt-4">
             <Route path="/question" exact render={ () =>
               <Question 
-                utils={utils}
+                utils={{...utils}}
                 handleAnswer={this.handleAnswer}
-                state={this.state}
+                state={{...this.state}}
               />
               } />
             <Route path="/" exact render={ () => 
@@ -157,7 +157,7 @@ class App extends Component {
             }/>
             <Route path="/choose-test" exact render={ () => 
               <Choose 
-                availableTests={this.state.options} 
+                availableTests={{...this.state.options}} 
                 handleChoosetest={this.generateNewTest}
               />
             }/>
@@ -166,7 +166,7 @@ class App extends Component {
             }/>
             <Route path="/summary" exact render={ () => 
               <Finish 
-                stats={this.state.stats} 
+                stats={[...this.state.stats]} 
               />
             } />
           </section>

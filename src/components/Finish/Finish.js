@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Error from '../Error/Error';
+import PropTypes from 'prop-types';
 
 const Finish = (props) => {
     const getCorrectNumber = () => {
@@ -19,5 +20,9 @@ const Finish = (props) => {
         <React.Fragment>{renderContents}</React.Fragment>
     )
 }
+
+Finish.propTypes = {
+    stats: PropTypes.array
+};
 
 export default Finish;

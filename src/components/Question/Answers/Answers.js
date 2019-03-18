@@ -1,13 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-const Answers = (props) => {
+const Answers = ({handleAnswer, state, utils}) => {
     const handleClick = (index, that) => {
-        let isAnswerCorrect = props.utils.isTheAnswerCorrect(index, props.state);
+        let isAnswerCorrect = utils.isTheAnswerCorrect(index, state);
         let elClass = isAnswerCorrect ? "correct" : "incorrect";
-        if(!isAnswerCorrect) showCorrect(props.utils.getCorrectAnswerIndex(props.state) - 1);
+        if(!isAnswerCorrect) showCorrect(utils.getCorrectAnswerIndex(state) - 1);
         assignClassName(that, elClass);
         blockAnswers();
-        props.handleAnswer(isAnswerCorrect);
+        handleAnswer(isAnswerCorrect);
     }
     const showCorrect = (index) => {
         let elements = document.getElementsByClassName('question__answer');
@@ -22,10 +23,11 @@ const Answers = (props) => {
     const assignClassName = (el, elClass) => {
         el.classList.add(elClass);
     }
-    let question = props.question;
+    let current = state.question.currentQuestionNumber;
+    let question = state.question.data ? state.question.data[current] : {};
     let answers = question.answers;
     let answersElement = Object.keys(answers).map((key)=>{
-        return <button className="question__answer " onClick={(e)=>{handleClick(key, e.target)}} key={props.questionNum + ':' + key}>{answers[key]}</button>;
+        return <button className="question__answer " onClick={(e)=>{handleClick(key, e.target)}} key={current + ':' + key}>{answers[key]}</button>;
     });
     return (
         <div className="question__answers mt-5 d-flex flex-column align-items-start">
@@ -33,5 +35,12 @@ const Answers = (props) => {
         </div>
     )
 }
+
+Answers.propTypes = {
+    state: PropTypes.object.isRequired,
+    handleAnswer: PropTypes.func.isRequired,
+    utils: PropTypes.object.isRequired
+};
+
 
 export default Answers;

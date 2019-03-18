@@ -3,6 +3,7 @@ import Answers from './Answers/Answers';
 import { withRouter } from 'react-router-dom';
 import Title from '../../Title';
 import Error from '../Error/Error';
+import PropTypes from 'prop-types';
 
 
 const Question = (props) => {
@@ -11,11 +12,7 @@ const Question = (props) => {
     let renderContents = question ? 
     (<React.Fragment>
         <Title text={question.question}/>
-        <Answers 
-            questionNum={current}
-            question={question} 
-            {...props}
-        />
+        <Answers {...props} />
         {props.state.repeat ? (<p className="random">Random questions enabled</p>) : '' }
     </React.Fragment>) :
     <Error error="Sorry, it seems there are no questions loaded!" />;
@@ -25,5 +22,9 @@ const Question = (props) => {
         </section>
     )
 }
+
+Question.propTypes = {
+    state: PropTypes.object.isRequired
+};
 
 export default withRouter(Question);
