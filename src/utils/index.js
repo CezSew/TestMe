@@ -12,6 +12,7 @@ import setCorrectAnswersCountOfQuestion from './setCorrectAnswersCountOfQuestion
 import areSomeAnswersIncorrect from './areSomeAnswersIncorrect';
 import getIncorrectAnswersIndexes from './getIncorrectAnswersIndexes';
 import isLastQuestion from './isLastQuestion';
+import overrideObject from './overrideObject';
 //import handleChoosetest from './handleChoosetest';
 
 export {
@@ -28,6 +29,7 @@ export {
     setCorrectAnswersCountOfQuestion,
     getIncorrectAnswersIndexes,
     areSomeAnswersIncorrect,
-    isLastQuestion
+    isLastQuestion,
+    overrideObject
     //handleChoosetest
 };

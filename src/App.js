@@ -28,6 +28,7 @@ class App extends Component {
         isTheAnswerCorrect: false
       },
       stats: [],
+      randomModeStats: [],
       questionsCount: '',
       questionTimeout: 1500,
       options: options,
@@ -44,11 +45,13 @@ class App extends Component {
     let questionNum = utils.setQuestionNumber(currentQuestionNumber, questionsCount);
     let step = utils.setStep(questionNum, currentQuestionNumber, questionsCount, this.state.stats);
     let repeat = false;
+    let randomModeStats;
     
     if(this.state.repeat || (utils.areSomeAnswersIncorrect(this.state.stats) && utils.isLastQuestion(currentQuestionNumber, questionsCount))) {
       step = 'question';
       questionNum = this.getRandomQuestion(this.state.question.data, questionsCount, this.state.stats, currentQuestionNumber);
       repeat = true;
+      this.getRandomQuestionNumber(this.state.question.data, questionsCount, this.state.stats, currentQuestionNumber);
     } 
     // if(this.state.stats.length > 0) this.getRNG(this.state.stats, questionNum, questionsCount);
 
@@ -71,6 +74,51 @@ class App extends Component {
     randomNumber = (randomNumber === currentQuestionNumber) ? ((randomNumber - 1 === 0) ? randomNumber + 1 : randomNumber - 1 ) : randomNumber;
     randomNumber = randomNumber === 0 ? 1 : randomNumber;
     return randomNumber;
+  }
+
+  getRandomQuestionNumber = (test, questionsCount, stats, currentQuestionNumber) => {
+    // stats = this.state.randomModeStats.length !== 0 ? this.state.randomModeStats : stats;
+    let randomModeStats = [];
+    let testQuestionsCount = Object.size(test) - 1;
+    let questionsRepeated = stats.length - testQuestionsCount;
+    let firstQuestionStats = stats.filter(stat => {
+      return stat[0] === 1;
+    });
+    // let firstQuestionTimesAsked = firstQuestionStats.length;
+    // let firstQuestionCorrectAnswers = firstQuestionStats.filter(stat => {
+    //   return stat[1] === true;
+    // }).length;
+    let questions = {...test};
+    delete questions.name;
+    Object.keys(questions).forEach(key => {
+      key = Number(key);
+      let questionStats = stats.filter(stat => {
+        return stat[0] === key;
+      });
+      let timesAsked = questionStats.length;
+      let correctAnswers = questionStats.filter(stat => {
+        return stat[1] === true;
+      }).length;
+      let probabilityPercentage = ((1 - correctAnswers/timesAsked) * 100) + '%' ;
+      console.log("-----------------");
+      console.log("question number " + key);
+      console.log("asked times: " + timesAsked);
+      console.log("correct: " + correctAnswers);
+      console.log("probability: " + probabilityPercentage);
+      console.log("-----------------");
+      randomModeStats[key] = {"tries":timesAsked,"correct":correctAnswers,"probability":probabilityPercentage};
+    });
+    // let probabilityPercentage = ((1 - firstQuestionCorrectAnswers/firstQuestionTimesAsked) * 100) + '%' ;
+    // let probability = 1 - firstQuestionCorrectAnswers/firstQuestionTimesAsked;
+    // let random = Math.random();
+    //console.log(randomModeStats);
+    this.setState({randomModeStats}, () => console.log(this.state.randomModeStats));
+    // if(random < probability) {
+      
+    // } else {
+      
+    // }
+
   }
 
   getRNG = (stats, questionNum, questionsCount) => {
