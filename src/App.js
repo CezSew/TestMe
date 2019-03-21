@@ -100,19 +100,49 @@ class App extends Component {
         return stat[1] === true;
       }).length;
       let probabilityPercentage = ((1 - correctAnswers/timesAsked) * 100) + '%' ;
-      console.log("-----------------");
-      console.log("question number " + key);
-      console.log("asked times: " + timesAsked);
-      console.log("correct: " + correctAnswers);
-      console.log("probability: " + probabilityPercentage);
-      console.log("-----------------");
-      randomModeStats[key] = {"tries":timesAsked,"correct":correctAnswers,"probability":probabilityPercentage};
+      let probability = (1 - correctAnswers/timesAsked);
+      randomModeStats[key - 1] = {"index":key,"tries":timesAsked,"correct":correctAnswers,"probability":probability};
     });
     // let probabilityPercentage = ((1 - firstQuestionCorrectAnswers/firstQuestionTimesAsked) * 100) + '%' ;
     // let probability = 1 - firstQuestionCorrectAnswers/firstQuestionTimesAsked;
-    // let random = Math.random();
+    let random = Math.random();
     //console.log(randomModeStats);
-    this.setState({randomModeStats}, () => console.log(this.state.randomModeStats));
+    /**
+     * GET RANDOM INDEX
+    */
+    let randomModeStatsCopy = [...randomModeStats]; 
+    console.log(randomModeStatsCopy);
+    let counter = 0;
+    let externalCounter = 0;
+    let randomNumberAcquired = false;
+    while(!randomNumberAcquired) {
+        let probability = randomModeStatsCopy[counter].probability;
+        random = Math.random();
+        console.log(random);
+        console.log(counter);
+        if(random <= probability) {
+          randomNumberAcquired = true;
+          // console.log("wybrano: ");
+          // console.log(randomModeStatsCopy[counter]);
+        }
+        counter++;
+        // console.log(randomModeStatsCopy);
+        if(counter === randomModeStatsCopy.length) {
+          
+          counter = 0;
+        }
+        externalCounter++;
+        if(externalCounter > 100) {
+          console.log('error:');
+          console.log(random);
+          console.log(counter);
+          console.log(randomModeStatsCopy);
+          console.log(randomModeStatsCopy[counter]);
+          break;
+        }
+    }
+
+    // this.setState({randomModeStats});
     // if(random < probability) {
       
     // } else {
