@@ -49,12 +49,11 @@ class App extends Component {
     
     if(this.state.repeat || (utils.areSomeAnswersIncorrect(this.state.stats) && utils.isLastQuestion(currentQuestionNumber, questionsCount))) {
       step = 'question';
-      questionNum = this.getRandomQuestion(this.state.question.data, questionsCount, this.state.stats, currentQuestionNumber);
+      // questionNum = this.getRandomQuestion(this.state.question.data, questionsCount, this.state.stats, currentQuestionNumber);
       repeat = true;
-      this.getRandomQuestionNumber(this.state.question.data, questionsCount, this.state.stats, currentQuestionNumber);
+      questionNum = this.getRandomQuestionNumber(this.state.question.data, questionsCount, this.state.stats, currentQuestionNumber);
+      console.log(questionNum);
     } 
-    // if(this.state.stats.length > 0) this.getRNG(this.state.stats, questionNum, questionsCount);
-
     this.setState({
       step:step, 
       question: { data: question, currentQuestionNumber: questionNum, correctIndex: question[questionNum].correct},
@@ -69,26 +68,17 @@ class App extends Component {
 
   }
 
-  getRandomQuestion = (test, questionsCount, stats, currentQuestionNumber) => {
-    let randomNumber = Math.floor(Math.random() * questionsCount) + 1;
-    randomNumber = (randomNumber === currentQuestionNumber) ? ((randomNumber - 1 === 0) ? randomNumber + 1 : randomNumber - 1 ) : randomNumber;
-    randomNumber = randomNumber === 0 ? 1 : randomNumber;
-    return randomNumber;
-  }
+  // getRandomQuestion = (test, questionsCount, stats, currentQuestionNumber) => {
+  //   let randomNumber = Math.floor(Math.random() * questionsCount) + 1;
+  //   randomNumber = (randomNumber === currentQuestionNumber) ? ((randomNumber - 1 === 0) ? randomNumber + 1 : randomNumber - 1 ) : randomNumber;
+  //   randomNumber = randomNumber === 0 ? 1 : randomNumber;
+  //   return randomNumber;
+  // }
 
   getRandomQuestionNumber = (test, questionsCount, stats, currentQuestionNumber) => {
-    // stats = this.state.randomModeStats.length !== 0 ? this.state.randomModeStats : stats;
     let randomModeStats = [];
-    let testQuestionsCount = Object.size(test) - 1;
-    let questionsRepeated = stats.length - testQuestionsCount;
-    let firstQuestionStats = stats.filter(stat => {
-      return stat[0] === 1;
-    });
-    // let firstQuestionTimesAsked = firstQuestionStats.length;
-    // let firstQuestionCorrectAnswers = firstQuestionStats.filter(stat => {
-    //   return stat[1] === true;
-    // }).length;
     let questions = {...test};
+    let currentQuestionIndex = this.state.question.currentQuestionNumber;
     delete questions.name;
     Object.keys(questions).forEach(key => {
       key = Number(key);
@@ -99,64 +89,30 @@ class App extends Component {
       let correctAnswers = questionStats.filter(stat => {
         return stat[1] === true;
       }).length;
-      let probabilityPercentage = ((1 - correctAnswers/timesAsked) * 100) + '%' ;
       let probability = (1 - correctAnswers/timesAsked);
       randomModeStats[key - 1] = {"index":key,"tries":timesAsked,"correct":correctAnswers,"probability":probability};
     });
-    // let probabilityPercentage = ((1 - firstQuestionCorrectAnswers/firstQuestionTimesAsked) * 100) + '%' ;
-    // let probability = 1 - firstQuestionCorrectAnswers/firstQuestionTimesAsked;
     let random = Math.random();
-    //console.log(randomModeStats);
-    /**
-     * GET RANDOM INDEX
-    */
     let randomModeStatsCopy = [...randomModeStats]; 
-    console.log(randomModeStatsCopy);
     let counter = 0;
-    let externalCounter = 0;
     let randomNumberAcquired = false;
+    let questionIndex;
     while(!randomNumberAcquired) {
         let probability = randomModeStatsCopy[counter].probability;
         random = Math.random();
-        console.log(random);
+        console.log('---');
         console.log(counter);
-        if(random <= probability) {
+        console.log(currentQuestionNumber);
+        console.log('---');
+        if((random <= probability) && ( counter + 1 ) !== currentQuestionNumber) {
           randomNumberAcquired = true;
-          // console.log("wybrano: ");
-          // console.log(randomModeStatsCopy[counter]);
-        }
-        counter++;
-        // console.log(randomModeStatsCopy);
-        if(counter === randomModeStatsCopy.length) {
-          
-          counter = 0;
-        }
-        externalCounter++;
-        if(externalCounter > 100) {
-          console.log('error:');
-          console.log(random);
-          console.log(counter);
-          console.log(randomModeStatsCopy);
-          console.log(randomModeStatsCopy[counter]);
+          questionIndex = counter + 1;
           break;
         }
+        counter++;
+        if(counter === randomModeStatsCopy.length) counter = 0;
     }
-
-    // this.setState({randomModeStats});
-    // if(random < probability) {
-      
-    // } else {
-      
-    // }
-
-  }
-
-  getRNG = (stats, questionNum, questionsCount) => {
-    // console.log('test');
-    // console.log(questionNum);
-    // if(questionNum === questionsCount) console.log('last question');
-    // if last question
-    //   if more than 2 answers were incorrect dont change step to finish, 
+    return questionIndex;
   }
 
   /**
