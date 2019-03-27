@@ -15,12 +15,7 @@ where correct_answers/appearances ratio of 1 is 0% chance of getting the questio
 What is really important about the TestMe is the fact, that you can import your own test from .txt file! The pattern of the .txt file should be as follows:
 
 ```
-question 1
-answer a
-answer b
-answer c
-answer d
-question 2
+question
 answer a
 answer b
 answer c
