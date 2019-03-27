@@ -1,3 +1,49 @@
+# TestMe
+
+## About the project
+
+Simple a-b-c-d question-answer application. I created it to study some cool React mechanisms, and also to make an easy and enjoyable way of studying. 
+
+## What is special about it?
+
+There is an interesting feature- if you make a mistake in two or more questions, they will be repeated to you depending on a pattern:
+
+                        probability = (1 - correct_answers/appearances) * 100%
+ 
+where correct_answers/appearances ratio of 1 is 0% chance of getting the question, and ratio of 3/10 would be 70% chance.
+
+What is really important about the TestMe is the fact, that you can import your own test from .txt file! The pattern of the .txt file should be as follows:
+
+```
+question 1
+answer a
+answer b
+answer c
+answer d
+question 2
+answer a
+answer b
+answer c
+answer d
+```
+
+To specify the correct answers, all you need to do is to put the `+` character as the first char in line of an answer. To make it clear, as an example, if we want to specify that `1.c` and `2.a` are the correct answers, file contents should look like this:
+
+```
+question 1
+answer a
+answer b
++answer c
+answer d
+question 2
++answer a
+answer b
+answer c
+answer d
+```
+
+## Launching and boilerplate
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
